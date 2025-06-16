@@ -1,84 +1,74 @@
-# **Gebruikershandleiding - Cryptoportfolio Manager**
+# 🧾 Gebruikershandleiding – Crypto Portfolio Beheer Applicatie
 
-## 1. **Beschrijving**
+## 1. Inleiding en Doel van het Project
 
-Deze applicatie toont een **Hello World** van zowel de frontend als de backend en geeft de **realtime prijs van Bitcoin (BTC/USD)** via de **Coinbase API**. De applicatie maakt gebruik van **React.js** voor de frontend, **Express.js** voor de backend, en **PostgreSQL** voor de database (voor toekomstige uitbreiding). Het project draait binnen **Docker**-containers met behulp van **Docker Compose**.
+Deze webapplicatie is ontworpen om je een duidelijk beeld te geven van hoe frontend en backend samenwerken. Op dit moment toont de app niet alleen eenvoudige "Hello World"-berichten om te testen of alles werkt, maar ook de actuele waarde van Bitcoin ten opzichte van de Amerikaanse dollar (BTC/USD). Die prijs wordt opgehaald via de API van Coinbase. De bedoeling is dat de applicatie later kan uitbreiden met een database zodat je bijvoorbeeld ook zelf portfolios kunt beheren. De hele applicatie is opgebouwd met behulp van moderne technologieën zoals React.js voor de gebruikersinterface, Express.js in combinatie met Node.js voor de serverkant, en PostgreSQL als databasesysteem. Alles draait netjes in aparte Docker-containers die automatisch opgestart worden via Docker Compose.
 
-## 2. **Technologieën**
+## 2. Gebruikte Technologieën in het Project
 
-* **Frontend**: React.js
-* **Backend**: Express.js + Node.js
-* **Database**: PostgreSQL (voor uitbreiding)
-* **Docker & Docker Compose** voor containerisatie en netwerkbeheer
+Bij het ontwikkelen van deze toepassing zijn er verschillende technologieën ingezet om ervoor te zorgen dat alles goed samenwerkt:
 
-## 3. **Installatie**
+- **Frontend**: De gebruikersinterface is gemaakt met React.js, een populaire JavaScript-bibliotheek die vaak wordt gebruikt voor het bouwen van interactieve websites.
+- **Backend**: Voor de server is er gekozen voor Express.js, een lichtgewicht framework dat draait bovenop Node.js, zodat data veilig en snel kan worden opgehaald en doorgestuurd.
+- **Database**: Hoewel de database op dit moment nog niet actief wordt gebruikt, is er al een configuratie voorzien voor PostgreSQL zodat toekomstige uitbreidingen makkelijker te integreren zijn.
+- **Containerisatie**: Zowel de frontend als de backend draaien elk in hun eigen container met behulp van Docker. Docker Compose wordt gebruikt om deze containers op te starten en met elkaar te verbinden.
 
-Volg de onderstaande stappen om de applicatie lokaal te draaien.
+## 3. Hoe Installeer je de Applicatie op je Eigen Computer?
 
-### Benodigdheden:
+Om deze applicatie lokaal te laten werken, moet je eerst controleren of je systeem de juiste software heeft geïnstalleerd. Je hebt **Docker** en **Docker Compose** nodig. Als je die nog niet hebt, kun je die downloaden via de officiële websites.
 
-* **Docker** en **Docker Compose** moeten geïnstalleerd zijn op je machine.
+### Stap voor stap installatieproces:
 
-  * [Installatie-instructies voor Docker](https://docs.docker.com/get-docker/)
-  * [Installatie-instructies voor Docker Compose](https://docs.docker.com/compose/install/)
+1. **Download de broncode:**
 
-### Stap 1: Clone de repository
+   ```bash
+   git clone https://github.com/henrique-cavaleiro/crypto.git
+   cd crypto
+   ```
 
-```bash
-git clone https://github.com/henrique-cavaleiro/crypto.git
-cd crypto
+2. **Pas instellingen aan indien nodig:**
+
+   Afhankelijk van jouw netwerkinstellingen kan het nodig zijn om IP-adressen in de configuratiebestanden aan te passen. Ook de mappen in `docker-compose.yml` kunnen gewijzigd worden als jouw lokale structuur daarvan afwijkt.
+
+3. **Installeer de nodige pakketten:**
+
+   ```bash
+   cd backend
+   npm install
+
+   cd ../frontend
+   npm install
+   ```
+
+4. **Start de containers op:**
+
+   ```bash
+   cd ../express-docker
+   docker-compose up -d --build
+
+   cd ../react-docker
+   docker-compose up -d --build
+   ```
+
+   Indien je ook de database apart wil starten:
+
+   ```bash
+   cd ../database
+   docker-compose up -d
+   ```
+
+5. **Toegang tot de applicatie:**
+
+   - Voor de gebruikersinterface (frontend): open je browser en ga naar `http://JOUW-IP:3000`
+   - Voor de backend (API’s):
+     - Hello World route: `http://JOUW-IP:3500/api/hello`
+     - Bitcoin realtime prijs: `http://JOUW-IP:3500/api/btc`
+
+## 4. Overzicht van de Mappen en Structuur van het Project
+
+De bestanden van dit project zijn overzichtelijk verdeeld over verschillende mappen zodat alles netjes blijft en je snel vindt wat je zoekt. Hier zie je hoe de structuur eruitziet:
+
 ```
-
-### Stap 2: Pas IP-adressen en mappen aan
-
-* Pas de IP-adressen aan in de configuratiebestanden, indien nodig.
-* Pas de mapstructuur aan in je `docker-compose.yml` bestanden volgens de standaard structuur of je eigen vereisten.
-
-### Stap 3: Installeer afhankelijkheden
-
-* Ga naar de backend- en frontend-mappen en installeer de Node.js-afhankelijkheden:
-
-```bash
-cd backend && npm install
-cd ../frontend && npm install
-```
-
-### Stap 4: Start de Docker containers
-
-* **Backend en database container**:
-
-```bash
-cd ../express-docker
-docker-compose up -d --build
-```
-
-* **Frontend container**:
-
-```bash
-cd ../react-docker
-docker-compose up -d --build
-```
-
-* **Database container (indien van toepassing)**:
-
-```bash
-cd ../postgresql
-docker-compose up -d
-```
-
-### Stap 5: Controleer de werking van de applicatie
-
-* **Frontend**: Open de browser en ga naar [http://IP-FRONTEND:3000](http://IP-FRONTEND:3000) om de applicatie te zien.
-* **Backend API**:
-
-  * **Hello World route**: [http://IP-BACKEND:3500/api/hello](http://IP-BACKEND:3500/api/hello)
-  * **Realtime BTC prijs**: [http://IP-BACKEND:3500/api/btc](http://IP-BACKEND:3500/api/btc)
-
-## 4. **Structuur van de Applicatie**
-
-De structuur van het project is als volgt:
-
-```bash
 crypto/
 ├── README.md
 ├── .gitignore
@@ -100,37 +90,25 @@ crypto/
 └── react-docker/
     └── frontend/
         ├── public/
-        │   ├── favicon.ico
         │   ├── index.html
-        │   ├── logo192.png
-        │   ├── logo512.png
         │   ├── manifest.json
-        │   └── robots.txt
         ├── src/
         │   ├── components/
         │   │   ├── CryptoChart.js
         │   │   ├── Portfolio.js
         │   │   └── examen.js
-        │   ├── App.css
         │   ├── App.js
-        │   ├── App.test.js
-        │   ├── index.css
-        │   ├── index.js
-        │   ├── logo.svg
-        │   ├── reportWebVitals.js
-        │   └── setupTests.js
+        │   └── index.js
         ├── Dockerfile
-        ├── README.md
         ├── package.json
-        └── package-lock.json
 ```
 
-## 5. **Voor wie is de applicatie bedoeld?**
+## 5. Voor Wie Is Deze Applicatie Gemaakt?
 
-Deze applicatie is bedoeld voor:
+Deze applicatie is bedoeld voor verschillende doelgroepen, met elk hun eigen leerdoel of interesse:
 
-* **Crypto-investeerders** die de prijs van Bitcoin willen volgen in realtime.
-* **Webontwikkelaars** die willen leren werken met **React.js**, **Express.js**, en **Docker**.
-* **Studenten** die hun kennis van **webtechnologieën** en **blockchain** willen vergroten.
+- Personen die interesse hebben in cryptomunten en graag de realtime koers van coins willen volgen op een eenvoudige manier.
+- Programmeurs die ervaring willen opdoen met moderne technologieën zoals React, Node.js en het opzetten van projecten in Docker-containers.
+- Traiders ze hebben een mooie overzicht van de shard en kunnen ermee traiden.
 
 ---
